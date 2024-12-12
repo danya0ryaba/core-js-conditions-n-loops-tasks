@@ -64,7 +64,13 @@ function getMaxNumber(a, b, c) {
  * {x: 1, y: 1}, {x: 2, y: 8} => false
  */
 function canQueenCaptureKing(queen, king) {
-
+  if (queen.x === king.x || queen.y === king.y) {
+    return true;
+  }
+  if (Math.abs(queen.x - king.x) === Math.abs(queen.y - king.y)) {
+    return true;
+  }
+  return false;
 }
 
 /**
@@ -85,8 +91,11 @@ function canQueenCaptureKing(queen, king) {
  *  2, 2, 5   => false
  *  3, 0, 3   => false
  */
-function isIsoscelesTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isIsoscelesTriangle(a, b, c) {
+  if (a + b <= c || a + c <= b || b + c <= a) {
+    return false;
+  }
+  return a === b || a === c || b === c;
 }
 
 /**
@@ -103,8 +112,43 @@ function isIsoscelesTriangle(/* a, b, c */) {
  *  10  => X
  *  26  => XXVI
  */
-function convertToRomanNumerals(/* num */) {
-  throw new Error('Not implemented');
+function convertToRomanNumerals(num) {
+  const romanSymbols = {
+    1: 'I',
+    4: 'IV',
+    5: 'V',
+    9: 'IX',
+    10: 'X',
+    20: 'XX',
+    30: 'XXX',
+  };
+  let result = '';
+  const tens = Math.floor(num / 10) * 10;
+  if (tens > 0) {
+    let tensCount = tens / 10;
+    while (tensCount > 0) {
+      result += romanSymbols[10];
+      tensCount -= 1;
+    }
+  }
+  let units = num % 10;
+  if (units > 0) {
+    if (units === 4) {
+      result += romanSymbols[4];
+    } else if (units === 9) {
+      result += romanSymbols[9];
+    } else {
+      if (units >= 5) {
+        result += romanSymbols[5];
+        units -= 5;
+      }
+      while (units > 0) {
+        result += romanSymbols[1];
+        units -= 1;
+      }
+    }
+  }
+  return result;
 }
 
 /**
@@ -122,8 +166,68 @@ function convertToRomanNumerals(/* num */) {
  *  '10,5'    => 'one zero point five'
  *  '1950.2'  => 'one nine five zero point two'
  */
-function convertNumberToString(/* numberStr */) {
-  throw new Error('Not implemented');
+function convertNumberToString(numberStr) {
+  let result = '';
+  let length = 0;
+  while (numberStr[length] !== undefined) {
+    length += 1;
+  }
+  for (let i = 0; i < length; i += 1) {
+    const char = numberStr[i];
+    switch (char) {
+      case '0':
+        result += 'zero';
+        break;
+      case '1':
+        result += 'one';
+        break;
+      case '2':
+        result += 'two';
+        break;
+      case '3':
+        result += 'three';
+        break;
+      case '4':
+        result += 'four';
+        break;
+      case '5':
+        result += 'five';
+        break;
+      case '6':
+        result += 'six';
+        break;
+      case '7':
+        result += 'seven';
+        break;
+      case '8':
+        result += 'eight';
+        break;
+      case '9':
+        result += 'nine';
+        break;
+      case '-':
+        result += 'minus ';
+        break;
+      case '.':
+        result += 'point ';
+        break;
+      case ',':
+        result += 'point ';
+        break;
+      default:
+        break;
+    }
+    if (i < length - 1 && result[result.length - 1] !== ' ') {
+      result += ' ';
+    }
+  }
+  let finalResult = '';
+  for (let j = 0; j < result.length; j += 1) {
+    if (j === 0 || result[j] !== ' ' || result[j - 1] !== ' ') {
+      finalResult += result[j];
+    }
+  }
+  return finalResult;
 }
 
 /**
@@ -138,8 +242,17 @@ function convertNumberToString(/* numberStr */) {
  *  '0123210'   => true
  *  'qweqwe'    => false
  */
-function isPalindrome(/* str */) {
-  throw new Error('Not implemented');
+function isPalindrome(str) {
+  let left = 0;
+  let right = str.length - 1;
+  while (left < right) {
+    if (str[left] !== str[right]) {
+      return false;
+    }
+    left += 1;
+    right -= 1;
+  }
+  return true;
 }
 
 /**
